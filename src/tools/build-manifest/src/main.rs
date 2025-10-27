@@ -490,6 +490,7 @@ impl Builder {
                 | PkgType::RustAnalysis
                 | PkgType::JsonDocs
                 | PkgType::RustcCodegenCranelift
+                | PkgType::RustcCodegenGcc
                 | PkgType::LlvmBitcodeLinker => {
                     extensions.push(host_component(pkg));
                 }

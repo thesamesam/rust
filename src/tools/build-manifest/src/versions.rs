@@ -58,6 +58,7 @@ pkg_type! {
     Miri = "miri"; preview = true,
     JsonDocs = "rust-docs-json"; preview = true,
     RustcCodegenCranelift = "rustc-codegen-cranelift"; preview = true,
+    RustcCodegenGcc = "rustc-codegen-gcc"; preview = true,
     LlvmBitcodeLinker = "llvm-bitcode-linker"; preview = true,
 }
 
@@ -82,6 +83,8 @@ impl PkgType {
             PkgType::LlvmTools => false,
             PkgType::Miri => false,
             PkgType::RustcCodegenCranelift => false,
+            // TODO
+            PkgType::RustcCodegenGcc => false,
 
             PkgType::Rust => true,
             PkgType::RustStd => true,
@@ -111,6 +114,7 @@ impl PkgType {
             RustcDocs => HOSTS,
             Cargo => HOSTS,
             RustcCodegenCranelift => HOSTS,
+            RustcCodegenGcc => HOSTS, // TODO
             RustMingw => MINGW,
             RustStd => TARGETS,
             HtmlDocs => HOSTS,

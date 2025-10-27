@@ -289,6 +289,19 @@ install!((self, builder, _config),
             );
         }
     };
+    RustcCodegenGcc, alias = "rustc-codegen-gcc", Self::should_build(_config), IS_HOST: true, {
+        if let Some(tarball) = builder.ensure(dist::GccCodegenBackend {
+            compilers: RustcPrivateCompilers::from_build_compiler(builder, self.build_compiler, self.target),
+            target: self.target
+        }) {
+            install_sh(builder, "rustc-codegen-gcc", self.build_compiler, Some(self.target), &tarball);
+        } else {
+            builder.info(
+                &format!("skipping Install CodegenBackend(\"gcc\") stage{} ({})",
+                         self.build_compiler.stage + 1, self.target),
+            );
+        }
+    };
     LlvmBitcodeLinker, alias = "llvm-bitcode-linker", Self::should_build(_config), IS_HOST: true, {
         if let Some(tarball) = builder.ensure(dist::LlvmBitcodeLinker { build_compiler: self.build_compiler, target: self.target }) {
             install_sh(builder, "llvm-bitcode-linker", self.build_compiler, Some(self.target), &tarball);
