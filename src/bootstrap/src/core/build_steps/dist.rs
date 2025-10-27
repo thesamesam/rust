@@ -1634,7 +1634,8 @@ impl Step for GccCodegenBackend {
         tarball.add_legal_and_readme_to("share/doc/rustc_codegen_gcc");
 
         let compilers = self.compilers;
-        let stamp = builder.ensure(compile::GccCodegenBackend { compilers }).stamp;
+        let output = builder.ensure(compile::GccCodegenBackend { compilers });
+        let stamp = output.stamp;
 
         if builder.config.dry_run() {
             return None;
@@ -1657,6 +1658,10 @@ impl Step for GccCodegenBackend {
             &normalize_codegen_backend_name(builder, &codegen_backend_dylib),
             FileType::NativeLibrary,
         );
+
+        // We need libgccjit itself, not just the codegen backend
+        //output.gcc.install_to(builder, &rustc_libdir);
+        //tarball.add_file(&output.libgccjit, "lib", FileType::NativeLibrary);
 
         Some(tarball.generate())
     }
